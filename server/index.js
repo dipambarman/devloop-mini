@@ -23,9 +23,12 @@ app.get('/api/health', (_req, res) => {
 // ── Auth routes ───────────────────────────────────────────────────────────────
 app.use('/api/auth', authRouter);
 
+import projectsRouter from './src/routes/projects.js';
+import bugsRouter from './src/routes/bugs.js';
+
 // Route stubs will be mounted here as tasks progress, e.g.:
-// app.use('/api/projects', projectsRouter);
-// app.use('/api/bugs', bugsRouter);
+app.use('/api/projects', projectsRouter);
+app.use('/api/bugs', bugsRouter);
 
 // ── Global error handler (must be last) ───────────────────────────────────────
 app.use(errorHandler);
@@ -44,4 +47,4 @@ connectDB()
     process.exit(1);
   });
 
-export default app;
+export { app };
