@@ -1,106 +1,131 @@
 # DevLoop Mini
 
-DevLoop Mini is a simplified MERN-stack error tracking and bug collaboration tool designed specifically for developers building with AI coding tools. It addresses the core problem of error recurrences across files and sessions by treating bugs as persistent identities with occurrences, regressions, and an append-only timeline.
+A bug tracker built for devs who work with AI coding tools.
 
-## Features
-- **User Authentication:** Secure JWT-based signup, login, and session management.
-- **Project Management:** Create projects and invite team members by email.
-- **Bug Tracking & Ingestion:** REST API to ingest error payloads with automatic deduplication using intelligent stack-trace fingerprinting.
-- **Interactive Timeline:** Append-only event log showing occurrences and status transitions over time.
-- **Optimistic Concurrency:** Safe, concurrent bug updates (severity/status) using version locking.
-- **Responsive UI:** Premium dark-mode interface with real-time filtering, pagination, and intuitive bug details.
+The idea is simple — when you're building with tools like Cursor or Kiro, the same errors keep popping up across files and sessions. DevLoop Mini treats each unique error as a "bug" with its own identity, tracks every time it happens, detects regressions, and gives your team a timeline to see what went wrong and when.
 
-## Technologies Used
-- **MongoDB** (with Mongoose)
-- **Express.js**
-- **React.js** (via Vite)
-- **Node.js**
-- **Zod** (Validation)
-- **Jest & Supertest** (Testing)
+Built with the MERN stack (MongoDB, Express, React, Node.js).
 
-## AI Development Experience (Kiro)
+## What it does
 
-During the development of this project, I used **Kiro** to accelerate the implementation and ensure high code quality. Kiro was particularly effective for generating boilerplate, writing tests, and implementing complex logic based on strict constraints. 
+- **Auth** — JWT-based signup/login with httpOnly cookies. No passwords stored in plain text, bcrypt handles hashing.
+- **Projects** — Create a project, invite teammates by email. Only members can see/modify bugs in that project.
+- **Error ingestion** — POST an error payload (message + stack trace) and the system figures out if it's a new bug or a repeat. Uses a fingerprinting algorithm that strips out noisy stuff like UUIDs, hex addresses, and line numbers before hashing.
+- **Regression detection** — If a bug was marked "fixed" and the same error comes in again, it gets reopened automatically and the regression count goes up.
+- **Bug timeline** — Every occurrence and status change is logged as an immutable event. You get a full history of what happened to each bug.
+- **Concurrent editing** — Uses optimistic locking (version field) so two people editing the same bug don't silently overwrite each other.
+- **Dark-mode UI** — React frontend with filtering, pagination, severity badges, and a timeline view.
 
-### Specific Tasks Supported by Kiro:
-1. **API Creation & Routing:** Used Kiro to rapidly bootstrap the Express server, middleware (authentication, error handling, Zod validation), and route controllers for Auth, Projects, and Bugs.
-2. **Database Integration:** Directed Kiro to create Mongoose schemas (`Bug`, `BugEvent`, `Project`, `User`) and complex aggregation/update queries (e.g., atomic `$inc` updates and optimistic locking).
-3. **Component Development:** Leveraged Kiro to scaffold the React frontend, generate the premium dark-theme CSS tokens, and build components like `BugTimeline` and `FilterBar`.
-4. **Complex Logic (Fingerprinting):** Used Kiro to implement the deterministic error fingerprinting algorithm using regex rules to strip volatile data (UUIDs, hex codes, line numbers) to prevent false splits/merges.
-5. **Testing:** Instructed Kiro to write comprehensive Jest and Supertest suites for unit and integration testing, ensuring correct concurrency behavior and accurate state transitions.
+## Tech stack
 
-## Prerequisites
+| Layer | Tech |
+|-------|------|
+| Database | MongoDB (Mongoose ODM) |
+| Backend | Node.js + Express |
+| Frontend | React (Vite) |
+| Validation | Zod |
+| Auth | JWT + bcrypt |
+| Tests | Jest + Supertest |
 
-- Node.js (v20+ recommended)
-- MongoDB Atlas cluster (or local instance)
+## Project structure
 
-## Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository_url>
-   cd devloop-mini
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   # Install server dependencies
-   cd server
-   npm install
-
-   # Install client dependencies
-   cd ../client
-   npm install
-   ```
-
-3. **Configure Environment:**
-   Copy `server/.env.example` to `server/.env` and update the values:
-   ```bash
-   cp server/.env.example server/.env
-   ```
-   *Note: `TEST_MONGODB_URI` must point to a separate database for running tests safely.*
-
-## Running the App
-
-Start the backend server and frontend dev server in separate terminals.
-
-**Backend Server (Port 4000):**
-```bash
-cd server
-npm run dev
+```
+devloop-mini/
+├── client/               # React frontend (Vite)
+│   └── src/
+│       ├── pages/        # Login, Signup, ProjectList, BugList, BugDetail
+│       ├── components/   # Shared UI components
+│       └── api/          # API helper functions
+├── server/               # Express backend
+│   └── src/
+│       ├── models/       # Mongoose schemas (User, Project, Bug, BugEvent)
+│       ├── services/     # Business logic (auth, ingest, state machine)
+│       ├── controllers/  # Route handlers
+│       ├── routes/       # Express routers + Zod schemas
+│       ├── middleware/   # Auth, error handler, project membership
+│       └── utils/        # Fingerprinting, AppError helper
+│   └── tests/
+│       ├── unit/         # Fingerprint algo + state machine tests
+│       └── integration/  # Full API tests (auth, bugs, projects, etc.)
+└── .kiro/                # Kiro specs (requirements, design, tasks)
 ```
 
-**Frontend Client (Vite Proxy):**
+## Getting started
+
+You'll need Node.js v20+ and a MongoDB instance (Atlas works fine).
+
 ```bash
+git clone https://github.com/dipambarman/devloop-mini.git
+cd devloop-mini
+```
+
+Install both sides:
+```bash
+cd server && npm install
+cd ../client && npm install
+```
+
+Set up your env — copy the example and fill in your values:
+```bash
+cp server/.env.example server/.env
+```
+
+The `.env` needs these:
+```
+PORT=4000
+MONGODB_URI=mongodb+srv://...your connection string...
+TEST_MONGODB_URI=mongodb+srv://...separate db for tests...
+JWT_SECRET=some-long-random-string
+NODE_ENV=development
+```
+
+## Running it
+
+Two terminals:
+
+```bash
+# Terminal 1 — backend
+cd server
+npm run dev
+
+# Terminal 2 — frontend
 cd client
 npm run dev
 ```
-Open `http://localhost:5173` in your browser.
 
-## Running Tests
+Then open http://localhost:5173
 
-The server uses Jest and Supertest. It creates database collections and clears them, so make sure `TEST_MONGODB_URI` is correctly configured to a test database in `.env` (or pass it in the command line).
+## Running tests
+
+56 tests across 8 suites — unit tests for the fingerprint algorithm and state machine, plus integration tests hitting the actual API with a real database.
 
 ```bash
 cd server
 npm test
 ```
 
-## Design Notes
+Make sure `TEST_MONGODB_URI` points to a separate database so tests don't mess with your dev data.
 
-### Bug Identity via Unique Index
-A bug is uniquely identified by the combination of its `project` and `fingerprint`. This is strictly enforced at the database level using a compound unique index: `{ project: 1, fingerprint: 1 }`. This guarantees that concurrent ingests of the same error will hit a `DuplicateKeyError`, triggering a safe atomic upsert retry instead of creating duplicate bugs.
+## How I used Kiro
 
-### Append-Only Event Log
-We treat the `BugEvent` collection as an immutable, append-only ledger. Events (like `occurrence` and `status_changed`) are only inserted, never updated or deleted. This models the history of a bug explicitly, ensuring that a bug's lifecycle is a reliable timeline rather than a single mutated state.
+I used Kiro to plan and build this project. The `.kiro/` folder in the repo has the full spec — requirements, design doc, and task breakdown that Kiro generated.
 
-### Fingerprint Limitations
-The fingerprint algorithm strips highly volatile data (like UUIDs, timestamps, line numbers) but has known limitations:
-- **False Merges**: Distinct errors that happen to throw the exact same generic message (e.g., "Timeout") from the exact same line in a utility function will produce the same fingerprint and merge into one bug.
-- **False Splits**: The same logical error thrown from code deployed with different bundlers (which changes the file basename) or wrapped in different async handlers will produce different fingerprints and appear as separate bugs.
+Here's what I actually used it for:
 
-### Optimistic Locking
-To prevent lost updates during concurrent edits (e.g., two developers changing severity or status at once), we use optimistic locking. The Mongoose `__v` field acts as the version token. Write operations (like `PATCH` or status transitions) require the client to supply the version they read. The database update filters on `{ _id, __v }`, and increments `__v`. If the document was modified in the interim, the write fails with a 409 Conflict.
+- **Planning** — Wrote out the requirements and Kiro helped break them into a structured design doc and task list. The state machine for bug status transitions came out of that process.
+- **Boilerplate** — Express server setup, Mongoose schemas, route wiring, middleware. The kind of stuff that's tedious to type out but needs to be right.
+- **Fingerprinting logic** — The algorithm that normalizes error messages (stripping UUIDs, hex, line numbers) before hashing. I described what I wanted and iterated on the regex rules.
+- **Tests** — Kiro wrote most of the test suite. I described the scenarios (concurrent ingests, illegal state transitions, authorization boundaries) and it generated the Jest/Supertest code.
+- **Bug fixes** — When tests failed, I used Kiro to debug and fix issues like Zod schema ordering and mock setup problems.
 
-### Non-Atomic Gap Between Bug Update and Event Insert
-The ingest operation updates the `Bug` document and then creates a `BugEvent` in two separate operations, as MongoDB doesn't support multi-document transactions by default. This means there is a narrow window where a crash could leave the Bug's `occurrenceCount` updated without the corresponding `occurrence` event in the timeline. This is a deliberate design trade-off for simplicity and performance over strict ACID guarantees.
+The code is mine to explain and defend — Kiro was the tool, not the author.
+
+## Design decisions worth mentioning
+
+**Why fingerprinting?** — Two errors that look "the same" to a human might have different timestamps, line numbers, or memory addresses in them. The fingerprint algorithm strips all that noise and hashes what's left, so `TypeError at utils.js` on your machine matches the same error on mine.
+
+**Why append-only events?** — Instead of mutating a bug's state and losing history, every change is a new event. This means you can always answer "what happened to this bug and when?"
+
+**Why optimistic locking?** — Two devs open the same bug, both change the severity. Without versioning, the second save silently overwrites the first. With `__v` checking, the second save gets a 409 Conflict and can retry with fresh data.
+
+**Known trade-off** — The ingest operation (update bug + create event) isn't wrapped in a transaction. There's a tiny window where a crash could leave the count updated without the corresponding event. I chose simplicity over strict ACID here since this is a dev tool, not a bank.
