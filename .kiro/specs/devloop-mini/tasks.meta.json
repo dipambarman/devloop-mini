@@ -1,0 +1,595 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Initialise `server/package.json` with `\"type\": \"module\"`, add dependencies: `express`, `mongoose`, `bcrypt`, `jsonwebtoken`, `cookie-parser`, `zod`, `dotenv`, `cors`; add devDependencies: `jest`, `supertest`, `@jest/globals`, `babel-jest` (or native ESM Jest config); add npm scripts `start`, `dev`, `test`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580418233
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580438933
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612177902
+      }
+    ],
+    "1.2 Create `server/src/config/env.js` — import `dotenv`, validate and export required env vars (`MONGODB_URI`, `JWT_SECRET`, `NODE_ENV`, `PORT`); throw on startup if any are missing": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580418621
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580445786
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612185075
+      }
+    ],
+    "1.3 Create `server/src/config/db.js` — export an async `connectDB()` function using `mongoose.connect(process.env.MONGODB_URI)`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580418763
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580452416
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612192121
+      }
+    ],
+    "1.4 Create `server/src/utils/AppError.js` — `AppError` class extending `Error` with `statusCode` and `code` fields": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580418860
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580459121
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612198587
+      }
+    ],
+    "1.5 Create `server/src/middleware/errorHandler.js` — global error handler: handle `AppError`, `ZodError`, and unexpected errors; return consistent `{ error, code }` JSON shape": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419002
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580466379
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612205687
+      }
+    ],
+    "1.6 Create `server/index.js` — bootstrap Express app, register `cookie-parser`, `express.json()`, CORS (allow client origin with credentials), mount route stubs at `/api`, call `connectDB()`, start server on `PORT`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419135
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580474096
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612213032
+      }
+    ],
+    "2.1 Create `server/src/models/User.js` — Mongoose schema with `email` (unique, lowercase, trim), `passwordHash`, `createdAt`; export model": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419226
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612221696
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612350553
+      }
+    ],
+    "2.2 Create `server/src/services/authService.js` — implement `signup(email, password)`: check duplicate email (throw `AppError(409, 'EMAIL_TAKEN')`), `bcrypt.hash` cost 12, `User.create`, sign JWT 24h, return `{ id, email, token }`; implement `login(email, password)`: `User.findOne`, `bcrypt.compare`, sign JWT, return user fields; implement `me(userId)`: `User.findById`, return `{ id, email }`; JWT payload `{ sub: user._id, email }` signed with `JWT_SECRET`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419344
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612357367
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613362831
+      }
+    ],
+    "3.1 Create `server/src/middleware/authenticate.js` — read `token` HttpOnly cookie, `jwt.verify`, attach `req.user = { id, email }`; on missing/invalid/expired → `AppError(401, 'UNAUTHORIZED')`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419452
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613391241
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613523918
+      }
+    ],
+    "3.2 Create `server/src/middleware/validate.js` — accept a Zod schema, parse `req.body` or `req.query`, on `ZodError` pass to `next(err)` (global handler converts to 400)": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419536
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613398631
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613530701
+      }
+    ],
+    "3.3 Create Zod schemas `signupSchema` and `loginSchema` in `server/src/routes/schemas.js`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419622
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613405502
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613537234
+      }
+    ],
+    "3.4 Create `server/src/controllers/authController.js` — thin handlers: `signup` sets HttpOnly cookie (`httpOnly: true, sameSite: 'lax', secure: NODE_ENV==='production', maxAge: 86400000`) and returns 201 `{ id, email }`; `login` sets cookie and returns 200 `{ id, email }`; `logout` clears cookie and returns 204; `me` returns 200 `{ id, email }`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419746
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613544417
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613616416
+      }
+    ],
+    "3.5 Create `server/src/routes/auth.js` — wire `POST /signup`, `POST /login`, `POST /logout`, `GET /me` with appropriate middleware and controllers; mount in `index.js` at `/api/auth`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419836
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613623316
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613705191
+      }
+    ],
+    "4.1 Create `server/src/models/Project.js` — Mongoose schema: `name` (1–100 chars, trim), `owner` (ObjectId ref User), `members` ([ObjectId ref User]), `createdAt`; no `ingestKeyHash` field": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580419929
+      },
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613713000
+      }
+    ],
+    "4.2 Create `server/src/middleware/requireMember.js` — Mode A (project-scoped, `:id` param): `Project.findById`, check `owner` / `members`; Mode B (bug-scoped, `:bugId` param): `Bug.findById.select('project status __v')` then `Project.findById(bug.project)`, same owner/member check; 404 on failure; attach `req.project` (and `req.bug`); never read `projectId` from body/query": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420023
+      }
+    ],
+    "4.3 Create Zod schemas `projectSchema` and `addMemberSchema` in `server/src/routes/schemas.js`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420182
+      }
+    ],
+    "4.4 Create `server/src/controllers/projectController.js` — `create`: `Project.create`, return 201 `{ id, name, owner }`; `list`: find where owner or member, return 200 array; `addMember`: find user by email (404 if not found, 409 if already member/owner), push to `members`, return 200 `{ id, email }`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420267
+      }
+    ],
+    "4.5 Create `server/src/routes/projects.js` — wire `POST /`, `GET /`, `POST /:id/members` with `authenticate`, `requireMember` (Mode A where applicable), `validate`, and controllers; mount at `/api/projects`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420354
+      }
+    ],
+    "5.1 Create `server/src/models/Bug.js` — Mongoose schema: `project` (ObjectId ref Project), `fingerprint` (String, length 16), `title` (String, required), `status` (enum: `open`, `in_progress`, `fixed`, `wontfix`, default `open`), `severity` (enum: `low`, `medium`, `high`, `critical`, default `medium`), `assignee` (ObjectId ref User, default null), `occurrenceCount` (Number, default 0), `regressions` (Number, default 0), `lastSeen` (Date, default Date.now), `errorType` (String, default `UnknownError`), `createdAt` (Date, default Date.now); define indexes: `UNIQUE { project:1, fingerprint:1 }`, `{ project:1, lastSeen:-1 }`, `{ project:1, status:1 }`, `{ project:1, severity:1 }`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420444
+      }
+    ],
+    "5.2 Create `server/src/models/BugEvent.js` — Mongoose schema: `bug` (ObjectId ref Bug, required), `project` (ObjectId ref Project, required, denormalised), `type` (enum: `occurrence`, `status_changed`, required), `createdAt` (Date, default Date.now), `occurrenceCount` (Number), `from` (String), `to` (String), `memberId` (ObjectId ref User); define index `{ bug:1, createdAt:1, _id:1 }`; documents are append-only — never updated or deleted": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420536
+      }
+    ],
+    "6.1 Create `server/src/utils/fingerprint.js` — pure export `fingerprint(rawMessage, errorType, rawStack)`:": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420630
+      }
+    ],
+    "7.1 Create `server/src/services/ingestService.js` — implement `ingest(projectId, message, stack)`:": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420727
+      }
+    ],
+    "8.1 Create `server/src/services/bugStateService.js` — define `TRANSITIONS` table: `{ open: ['in_progress', 'wontfix'], in_progress: ['open', 'fixed'], fixed: ['open'], wontfix: ['open'] }`; implement `transition(bugId, toStatus, memberId, version, currentStatus)`:": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420862
+      }
+    ],
+    "9. Checkpoint — server services complete": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580420951
+      }
+    ],
+    "10.1 Create Zod schemas in `server/src/routes/schemas.js`: `ingestSchema` (`message` 1–2000, `stack` 1–50000), `bugPatchSchema` (optional `severity` enum + optional `assignee` string, `.refine` at least one field, `.strict()` to reject extra keys), `statusSchema` (`status` enum + `version` integer), `bugListQuery` (`status?`, `severity?`, `assignee?`, `search?`, `skip?: coerce int ≥0 default 0`, `limit?: coerce int 1–200 default 50`)": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421040
+      }
+    ],
+    "10.2 Create `server/src/controllers/bugController.js` — `list`: apply filters from validated query + `limit`/`skip` pagination, return 200 `{ bugs, total }`; `detail`: return bug fields + BugEvents sorted `{ createdAt: 1, _id: 1 }`; `patchMetadata`: conditional write `{ _id, __v, status }` filter, return 200 or throw 409; `transitionStatus`: delegate to `bugStateService.transition`, return 200; no comment handlers": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421136
+      }
+    ],
+    "10.3 Create `server/src/controllers/ingestController.js` — single member route handler: delegate to `ingestService.ingest(req.project._id, message, stack)`; return 200 `{ id, fingerprint, occurrenceCount, status, regressions }`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421229
+      }
+    ],
+    "10.4 Create `server/src/routes/bugs.js` — wire `GET /:bugId`, `PATCH /:bugId`, `POST /:bugId/status` with `authenticate`, `requireMember` (Mode B), `validate`, and controllers; mount at `/api/bugs`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421315
+      }
+    ],
+    "10.5 Add bug list and member ingest routes to `server/src/routes/projects.js` — `GET /:id/bugs` with `authenticate`, `requireMember` (Mode A), `validate(bugListQuery)`, `bugController.list`; `POST /:id/ingest` with `authenticate`, `requireMember` (Mode A), `validate(ingestSchema)`, `ingestController.member`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421413
+      }
+    ],
+    "11. Checkpoint — server complete": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421519
+      }
+    ],
+    "12.1 Initialise Vite + React project in `client/` (`npm create vite@latest client -- --template react`); install `react-router-dom`; configure `vite.config.js` proxy for `/api` to `http://localhost:<PORT>`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421639
+      }
+    ],
+    "12.2 Create `client/src/api/auth.js` — `login(email, password)`, `signup(email, password)`, `logout()`, `me()` — thin `fetch` wrappers with `credentials: 'include'`; throw `{ error, code }` on non-2xx": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421730
+      }
+    ],
+    "12.3 Create `client/src/api/projects.js` — `listProjects()`, `createProject(name)`, `addMember(projectId, email)`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421816
+      }
+    ],
+    "12.4 Create `client/src/api/bugs.js` — `listBugs(projectId, params)`, `getBug(bugId)`, `patchBug(bugId, data)`, `transitionStatus(bugId, data)`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580421906
+      }
+    ],
+    "12.5 Create `client/src/api/ingest.js` — `ingestError(projectId, message, stack)`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422004
+      }
+    ],
+    "13.1 Create `client/src/App.jsx` — set up React Router v6 routes: `/login` → `LoginPage`, `/signup` → `SignupPage`, `/projects` → `ProjectListPage`, `/projects/:id/bugs` → `BugListPage`, `/bugs/:bugId` → `BugDetailPage`; implement `ProtectedRoute` component that calls `api/auth.me()` and redirects to `/login` if unauthenticated": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422098
+      }
+    ],
+    "14.1 Create `client/src/components/NavBar.jsx` — displays logout button when authenticated; calls `api/auth.logout()` on click; redirects to `/login` on 204": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422219
+      }
+    ],
+    "14.2 Create `client/src/pages/LoginPage.jsx` — email + password form; client-side validation (non-empty, email format, password ≥8 chars) without submission; calls `api/auth.login()`; redirects to `/projects` on 200; inline error on 4xx": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422302
+      }
+    ],
+    "14.3 Create `client/src/pages/SignupPage.jsx` — same pattern as LoginPage; calls `api/auth.signup()`; redirects to `/projects` on 201": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422381
+      }
+    ],
+    "15.1 Create `client/src/components/ProjectForm.jsx` — inline create-project form; client-side validation (non-empty name); calls `api/projects.createProject()`; on 201 prepends project to list; inline error on 4xx; no full page reload": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422470
+      }
+    ],
+    "15.2 Create `client/src/pages/ProjectListPage.jsx` — fetch and display projects list (name + owner email) on mount; render `ProjectForm`; protected by `ProtectedRoute`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422560
+      }
+    ],
+    "16.1 Create `client/src/components/FilterBar.jsx` — controlled inputs for `status`, `severity`, `assignee`, and search text; debounced 300 ms; emits filter change to parent": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422647
+      }
+    ],
+    "16.2 Create `client/src/components/PasteErrorBox.jsx` — two textareas (`message` max 2000, `stack` max 50000); submit calls `api/ingest.ingestError()`; on 200 display returned `status` + `occurrenceCount` inline and clear inputs; on error display inline error and retain values": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422736
+      }
+    ],
+    "16.3 Create `client/src/pages/BugListPage.jsx` — fetch paginated bugs for project on mount using `limit`/`skip`; render each bug's `title`, `status`, `severity`, `occurrenceCount`, `regressions`, `lastSeen`; empty-state message when no bugs; render `FilterBar` and reload bugs within 300 ms of filter change; load-more button or simple pagination for additional pages; inline retry on fetch failure; render `PasteErrorBox`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422820
+      }
+    ],
+    "17.1 Create `client/src/components/BugTimeline.jsx` — render ordered BugEvents ascending by `createdAt`; switch on `type`: `occurrence` (show `occurrenceCount`), `status_changed` (show `from` → `to`); no comment rendering": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422904
+      }
+    ],
+    "17.2 Create `client/src/components/StatusActions.jsx` — render one button per legal next status (derived from TRANSITIONS) for the bug's current status; on click call `api/bugs.transitionStatus()`; on 200 update displayed status and append `status_changed` event to timeline; inline error on 4xx/5xx": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580422996
+      }
+    ],
+    "17.3 Create `client/src/pages/BugDetailPage.jsx` — fetch bug + events on mount; display `title`, `status`, `severity`, `assignee`, `occurrenceCount`, `regressions`, `lastSeen`, `fingerprint`; render `BugTimeline` and `StatusActions`; inline error on action failures": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423098
+      }
+    ],
+    "18. Checkpoint — client complete": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423214
+      }
+    ],
+    "19.1 Create Jest config in `server/jest.config.js` — configure for ESM (`transform`, `extensionsToTreatAsEsm`), set `testEnvironment: 'node'`, point `globalSetup` and `globalTeardown` to setup files": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423303
+      }
+    ],
+    "19.2 Create `server/tests/globalSetup.js` — connect to `TEST_MONGODB_URI`; create `server/tests/globalTeardown.js` — drop all collections; create `server/tests/helpers/db.js` — `clearCollections()` helper for between-test cleanup": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423394
+      }
+    ],
+    "20.1 Create `server/tests/unit/fingerprint.test.js` — table-driven Jest tests covering: UUID removal, `0x`-prefixed hex removal, 8+-char hex-with-digit removal, standalone numeric ID removal, `line:col` removal, whitespace collapsing, `errorType` extraction (present, absent → `UnknownError`), stack frame normalization (present with basename-only, anonymous → `\"anonymous\"`, absent → `\"anonymous\"`); include ≥2 documented false-merge cases with inline comments explaining the merge; include ≥2 documented false-split cases with inline comments explaining the split; each case asserts deterministic 16-hex output matching `/^[0-9a-f]{16}$/`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423481
+      }
+    ],
+    "21.1 Create `server/tests/unit/bugState.test.js` — test all 9 legal transitions (accept, return updated bug); test all 12 illegal transitions (throw `AppError(422, 'ILLEGAL_TRANSITION')`); test stale `__v` or status mismatch → `AppError(409, 'STALE_VERSION')`; mock or use test DB for `Bug.findOneAndUpdate` and `BugEvent.create`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423571
+      }
+    ],
+    "22.1 Create `server/tests/integration/auth.test.js` — test: signup success (201, cookie set, `{ id, email }`), duplicate email (409), login success (200, cookie set), wrong password/email (401), logout (204, cookie cleared), `GET /me` with valid cookie (200), `GET /me` with missing/expired cookie (401), validation errors (400) for each invalid field": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423665
+      }
+    ],
+    "23.1 Create `server/tests/integration/projects.test.js` — test: create project (201, owner set), list projects (own + member projects returned), add member by email (200), add member with unknown email (404), add member as non-owner (404), duplicate member (409), unauthenticated requests (401), validation errors (400)": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423766
+      }
+    ],
+    "24.1 Create `server/tests/integration/ingest.test.js` — test: member ingest (200, response contains `{ id, fingerprint, occurrenceCount, status, regressions }`), same message twice → `occurrenceCount === 2` and exactly 1 Bug document, non-member (404), invalid body (400)": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423855
+      }
+    ],
+    "25.1 Create `server/tests/integration/concurrency.test.js` — send 20 concurrent identical ingest requests via `Promise.all`; assert exactly 1 Bug document exists and `occurrenceCount === 20`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580423949
+      }
+    ],
+    "25.2 Create `server/tests/integration/regression.test.js` — create bug, transition to `fixed`, ingest new occurrence; assert `status === 'open'`, `regressions === 1`; assert event log contains `status_changed` event (from `fixed` to `open`) with `createdAt` strictly before the `occurrence` event's `createdAt` when sorted ascending by `(createdAt, _id)`": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580424159
+      }
+    ],
+    "26.1 Create `server/tests/integration/bugs.test.js` — test: list bugs (filters: `status`, `severity`, `assignee`, `search`; `limit`/`skip` pagination), bug detail + timeline (events sorted ascending by `createdAt, _id`), PATCH metadata (success 200, stale `__v` → 409, validation error → 400), status transition (legal → 200, illegal → 422, stale → 409, not found → 404)": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580424368
+      }
+    ],
+    "27.1 Create `server/tests/integration/authorization.test.js` — user B (not a member of user A's project) attempts every applicable route: `GET /api/projects/:id/bugs`, `POST /api/projects/:id/ingest`, `GET /api/bugs/:bugId`, `PATCH /api/bugs/:bugId`, `POST /api/bugs/:bugId/status`; assert HTTP 404 on every route": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580424463
+      }
+    ],
+    "28.1 Create `README.md` at workspace root — sections: Project Overview, Prerequisites, Setup (clone, install, `.env` configuration from `.env.example`), Running the App (server + client commands), Running Tests (unit, integration, `TEST_MONGODB_URI` requirement), Design Notes (Bug Identity via Unique Index, Append-Only Event Log, Fingerprint Limitations, Optimistic Locking, Non-Atomic Gap Between Bug Update and Event Insert)": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580424559
+      }
+    ],
+    "28.2 Verify `server/.env.example` includes keys `MONGODB_URI`, `JWT_SECRET`, `NODE_ENV`, `PORT` with placeholder values; no real secrets": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580424651
+      }
+    ],
+    "29. Final checkpoint — full suite passes": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791580424745
+      }
+    ],
+    "1. Server bootstrap — project skeleton, env config, DB connection, Express app": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791612213109
+      }
+    ],
+    "2. User model and auth service": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613362902
+      }
+    ],
+    "3. Auth middleware, routes, and controllers": [
+      {
+        "executionId": "176a020c-7ce6-4bbf-bb3f-c0728be166c6",
+        "chatSessionId": "sess_d0e3a9e1-1d4e-4f19-98e3-9d8d7e6a2e4c",
+        "timestamp": 1791613705239
+      }
+    ]
+  }
+}
