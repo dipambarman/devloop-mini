@@ -124,6 +124,10 @@ The code is mine to explain and defend — Kiro was the tool, not the author.
 
 **Why fingerprinting?** — Two errors that look "the same" to a human might have different timestamps, line numbers, or memory addresses in them. The fingerprint algorithm strips all that noise and hashes what's left, so `TypeError at utils.js` on your machine matches the same error on mine.
 
+**Fingerprinting Limitations** — The algorithm isn't perfect by design. 
+- *False Merges:* Two distinct logical errors that happen to throw the exact same generic message (e.g. "Timeout") from the exact same utility function will get merged into one bug.
+- *False Splits:* The same logical error thrown from code bundled by different bundlers (which changes the file basename) or wrapped in different async handlers might produce different fingerprints and appear as separate bugs.
+
 **Why append-only events?** — Instead of mutating a bug's state and losing history, every change is a new event. This means you can always answer "what happened to this bug and when?"
 
 **Why optimistic locking?** — Two devs open the same bug, both change the severity. Without versioning, the second save silently overwrites the first. With `__v` checking, the second save gets a 409 Conflict and can retry with fresh data.
