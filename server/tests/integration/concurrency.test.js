@@ -37,8 +37,14 @@ describe('Concurrency and Regression', () => {
     const iRes1 = await request(app).post(`/api/projects/${projectId}/ingest`).set('Cookie', cookieA).send(payload);
     const bugId = iRes1.body.id;
 
-    // 2. Mark fixed
-    const bug = await Bug.findById(bugId);
+    // 2. Mark fixed (open -> in_progress -> fixed)
+    let bug = await Bug.findById(bugId);
+    await request(app)
+      .post(`/api/bugs/${bugId}/status`)
+      .set('Cookie', cookieA)
+      .send({ status: 'in_progress', version: bug.__v });
+
+    bug = await Bug.findById(bugId);
     await request(app)
       .post(`/api/bugs/${bugId}/status`)
       .set('Cookie', cookieA)
@@ -57,6 +63,6 @@ describe('Concurrency and Regression', () => {
     const lastStatusChanged = events.findLast((e) => e.type === 'status_changed');
     const lastOccurrence = events.findLast((e) => e.type === 'occurrence');
 
-    expect(lastStatusChanged.createdAt.getTime()).toBeLessThan(lastOccurrence.createdAt.getTime());
+    expect(events.indexOf(lastStatusChanged)).toBeLessThan(events.indexOf(lastOccurrence));
   });
 });

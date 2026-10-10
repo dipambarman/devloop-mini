@@ -17,7 +17,7 @@ describe('Bugs API', () => {
     const iRes = await request(app)
       .post(`/api/projects/${projectId}/ingest`)
       .set('Cookie', cookieA)
-      .send({ message: 'Bug 1', stack: 'at foo' });
+      .send({ message: 'Bug error', stack: 'at foo' });
     bugId = iRes.body.id;
   });
 
@@ -26,13 +26,13 @@ describe('Bugs API', () => {
     expect(res.status).toBe(200);
     expect(res.body.bugs).toHaveLength(1);
     expect(res.body.total).toBe(1);
-    expect(res.body.bugs[0].title).toBe('Bug 1');
+    expect(res.body.bugs[0].title).toBe('Bug error');
   });
 
   it('gets bug details and timeline', async () => {
     const res = await request(app).get(`/api/bugs/${bugId}`).set('Cookie', cookieA);
     expect(res.status).toBe(200);
-    expect(res.body.title).toBe('Bug 1');
+    expect(res.body.title).toBe('Bug error');
     expect(res.body.events).toHaveLength(1);
     expect(res.body.events[0].type).toBe('occurrence');
   });

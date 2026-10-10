@@ -36,15 +36,17 @@ app.use(errorHandler);
 // ── Start ─────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 4000;
 
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server listening on port ${PORT}`);
+if (process.env.NODE_ENV !== 'test') {
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Server listening on port ${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.error('Failed to connect to MongoDB, server not started:', err.message);
+      process.exit(1);
     });
-  })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB, server not started:', err.message);
-    process.exit(1);
-  });
+}
 
 export { app };

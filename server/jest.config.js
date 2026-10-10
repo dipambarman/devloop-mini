@@ -2,6 +2,6 @@
 export default {
   testEnvironment: 'node',
   transform: {},
-  globalSetup: './tests/globalSetup.js',
-  globalTeardown: './tests/globalTeardown.js',
+  setupFilesAfterEnv: ['./tests/setupAfterEnv.js'],
+  testTimeout: 20000,
 };

@@ -4,18 +4,18 @@ import Bug from '../../src/models/Bug.js';
 import BugEvent from '../../src/models/BugEvent.js';
 import { AppError } from '../../src/utils/AppError.js';
 
-// Mock Mongoose models
-jest.unstable_mockModule('../../src/models/Bug.js', () => ({
-  default: { findOneAndUpdate: jest.fn() },
-}));
-jest.unstable_mockModule('../../src/models/BugEvent.js', () => ({
-  default: { create: jest.fn() },
-}));
-
 describe('bugStateService', () => {
+  let findOneAndUpdateSpy;
+  let createEventSpy;
+
   beforeEach(() => {
-    Bug.findOneAndUpdate.mockReset();
-    BugEvent.create.mockReset();
+    findOneAndUpdateSpy = jest.spyOn(Bug, 'findOneAndUpdate').mockImplementation();
+    createEventSpy = jest.spyOn(BugEvent, 'create').mockImplementation();
+  });
+
+  afterEach(() => {
+    findOneAndUpdateSpy.mockRestore();
+    createEventSpy.mockRestore();
   });
 
   const legalTransitions = [
@@ -30,17 +30,17 @@ describe('bugStateService', () => {
   legalTransitions.forEach(({ from, to }) => {
     it(`allows legal transition: ${from} -> ${to}`, async () => {
       const mockBug = { _id: 'bug1', project: 'proj1', status: to, __v: 2 };
-      Bug.findOneAndUpdate.mockResolvedValue(mockBug);
-      BugEvent.create.mockResolvedValue({});
+      findOneAndUpdateSpy.mockResolvedValue(mockBug);
+      createEventSpy.mockResolvedValue({});
 
       const result = await bugStateService.transition('bug1', to, 'user1', 1, from);
       expect(result).toBe(mockBug);
-      expect(Bug.findOneAndUpdate).toHaveBeenCalledWith(
+      expect(findOneAndUpdateSpy).toHaveBeenCalledWith(
         { _id: 'bug1', __v: 1, status: from },
         { $set: { status: to }, $inc: { __v: 1 } },
         { new: true }
       );
-      expect(BugEvent.create).toHaveBeenCalledWith({
+      expect(createEventSpy).toHaveBeenCalledWith({
         bug: 'bug1',
         project: 'proj1',
         type: 'status_changed',
@@ -60,14 +60,14 @@ describe('bugStateService', () => {
           await expect(
             bugStateService.transition('bug1', to, 'user1', 1, from)
           ).rejects.toThrow(new AppError(422, 'ILLEGAL_TRANSITION', 'Illegal status transition'));
-          expect(Bug.findOneAndUpdate).not.toHaveBeenCalled();
+          expect(findOneAndUpdateSpy).not.toHaveBeenCalled();
         });
       }
     });
   });
 
   it('throws STALE_VERSION if findOneAndUpdate returns null', async () => {
-    Bug.findOneAndUpdate.mockResolvedValue(null);
+    findOneAndUpdateSpy.mockResolvedValue(null);
     await expect(
       bugStateService.transition('bug1', 'in_progress', 'user1', 1, 'open')
     ).rejects.toThrow(new AppError(409, 'STALE_VERSION', 'Conflict: stale version'));

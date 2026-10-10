@@ -67,19 +67,27 @@ function parseTopFrame(rawStack) {
     // V8 with function: "at funcName (/path/to/file.js:42:13)"
     let m = t.match(/^at\s+(.+?)\s+\((.+?)(?::\d+(?::\d+)?)?\)$/);
     if (m) {
-      return `${cleanFunc(m[1])}@${fileBasename(m[2])}`;
+      const fn = cleanFunc(m[1]);
+      const file = fileBasename(m[2]);
+      if (fn === 'anonymous' && file === 'anonymous') return 'anonymous';
+      return `${fn}@${file}`;
     }
 
     // V8 anonymous: "at /path/to/file.js:42:13"  (no parens, no function name)
     m = t.match(/^at\s+([^(]+?)(?::\d+(?::\d+)?)?$/);
     if (m && m[1].trim()) {
-      return `anonymous@${fileBasename(m[1].trim())}`;
+      const file = fileBasename(m[1].trim());
+      if (file === 'anonymous' || file === '<anonymous>') return 'anonymous';
+      return `anonymous@${file}`;
     }
 
     // Firefox / Safari: "funcName@/path/to/file.js:42:13"
     m = t.match(/^(.+?)@(.+?)(?::\d+(?::\d+)?)?$/);
     if (m && m[2]) {
-      return `${m[1] || 'anonymous'}@${fileBasename(m[2])}`;
+      const fn = m[1] ? cleanFunc(m[1]) : 'anonymous';
+      const file = fileBasename(m[2]);
+      if (fn === 'anonymous' && file === 'anonymous') return 'anonymous';
+      return `${fn}@${file}`;
     }
   }
 

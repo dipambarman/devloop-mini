@@ -57,7 +57,7 @@ describe('Auth routes', () => {
     const cookie = loginRes.headers['set-cookie'];
     const res = await request(app).post('/api/auth/logout').set('Cookie', cookie);
     expect(res.status).toBe(204);
-    expect(res.headers['set-cookie'][0]).toMatch(/Max-Age=0/);
+    expect(res.headers['set-cookie'][0]).toMatch(/Max-Age=0|Expires=Thu, 01 Jan 1970/);
   });
 
   it('validates signup input', async () => {

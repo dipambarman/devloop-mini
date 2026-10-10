@@ -40,10 +40,10 @@ export const bugPatchSchema = z
     severity: z.enum(['low', 'medium', 'high', 'critical']).optional(),
     assignee: z.string().optional(), // assuming objectId as string
   })
+  .strict()
   .refine((data) => data.severity || data.assignee, {
     message: 'at least one field required',
-  })
-  .strict();
+  });
 
 export const statusSchema = z.object({
   status: z.enum(['open', 'in_progress', 'fixed', 'wontfix']),
